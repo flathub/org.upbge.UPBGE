@@ -52,7 +52,7 @@ modules:
       - install -Dm644 /app/blender/$FLATPAK_ID.svg /app/share/icons/hicolor/scalable/apps/$FLATPAK_ID.svg
       - install -Dm644 /app/blender/$FLATPAK_ID-symbolic.svg /app/share/icons/hicolor/symbolic/apps/$FLATPAK_ID-symbolic.svg
       - cd /app/blender/*.*/datafiles && mv locale /app/share/locale && ln -sf /app/share/locale locale
-      - install -Dm644 /app/blender/$FLATPAK_ID.metainfo.xml /app/share/metainfo/$FLATPAK_ID.metainfo.xml
+      - install -Dm644 $FLATPAK_ID.metainfo.xml /app/share/metainfo/$FLATPAK_ID.metainfo.xml # Change this to be from the archive, next release.
     sources:
       - type: archive
         url: https://github.com/UPBGE/upbge/releases/download/v0.44/upbge-0.44-linux-x86_64.tar.xz
@@ -63,3 +63,8 @@ modules:
           - cd /app/blender
           - exec ./blender "$@"
         dest-filename: blender.sh
+      # Upstream metadata wasn't updated on the release tag.
+      - type: file
+        url: https://raw.githubusercontent.com/UPBGE/upbge/ba7c145f5a4a83f1d3fb7b23f1741b0fe1ac3f83/release/freedesktop/org.upbge.UPBGE.metainfo.xml
+        sha256: ef4c0c8f4cd098f30241fb6de76496cf0cf43f7a7ef7e1b8be9fb1b45a64516d
+
