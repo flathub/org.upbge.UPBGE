@@ -1,12 +1,13 @@
 id: org.upbge.UPBGE
 runtime: org.freedesktop.Platform
-runtime-version: '24.08'
+runtime-version: '26.08'
 sdk: org.freedesktop.Sdk
 command: blender
 finish-args:
   - "--share=ipc"
-  - "--socket=wayland"
-  - "--socket=fallback-x11"
+  - "--nosocket=wayland"
+  - "--nosocket=fallback-x11"
+  - "--socket=x11"
   - "--socket=pulseaudio"
   - "--device=dri"
   - "--share=network"
@@ -23,12 +24,11 @@ add-extensions:
     autodelete: true
   org.freedesktop.Platform.ffmpeg-full:
     directory: lib/ffmpeg
-    version: '23.08'
+    version: '26.08'
     add-ld-path: "."
 cleanup-commands:
   - mkdir -p /app/lib/ffmpeg
 modules:
-  - shared-modules/libdecor/libdecor-0.2.0.json
   - name: x264
     config-opts:
       - "--prefix=/app/lib/codecs"
@@ -55,16 +55,16 @@ modules:
       - install -Dm644 $FLATPAK_ID.metainfo.xml /app/share/metainfo/$FLATPAK_ID.metainfo.xml # Change this to be from the archive, next release.
     sources:
       - type: archive
-        url: https://github.com/UPBGE/upbge/releases/download/v0.44/upbge-0.44-linux-x86_64.tar.xz
-        sha256: cb23e1003dc3ec10847eb7ac4380eba9cd5de6a53b944d6231f46841534afd5f
+        url: https://github.com/UPBGE/upbge/releases/download/v0.50/upbge-0.50-linux-x64.tar.xz
+        sha256: 21d535641cbab1751766737cd9958bae120cd161cf7f0c86f5d5df6dca868314
         strip-components: 0
       - type: script
         commands:
           - cd /app/blender
           - exec ./blender "$@"
         dest-filename: blender.sh
-      # Upstream metadata wasn't updated on the release tag.
+      # Upstream metadata wasn't updated on the release tag again.
       - type: file
-        url: https://raw.githubusercontent.com/UPBGE/upbge/ba7c145f5a4a83f1d3fb7b23f1741b0fe1ac3f83/release/freedesktop/org.upbge.UPBGE.metainfo.xml
-        sha256: ef4c0c8f4cd098f30241fb6de76496cf0cf43f7a7ef7e1b8be9fb1b45a64516d
+        url: https://raw.githubusercontent.com/UPBGE/upbge/5451588498d3946cd389c9de3f426167704c84de/release/freedesktop/org.upbge.UPBGE.metainfo.xml
+        sha256: ae75cf4205462a98391e5849de6264f33e09306a4da29f1510b7f33c24a25dc5
 
